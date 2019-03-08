@@ -1,0 +1,5 @@
+vendor/
+glide.lock
+.env
+go-line-chatbot
+gin-bin
