@@ -1,11 +1,9 @@
 package delivery
 
 import (
-	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/domain"
 	entryUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/usecase"
 	botUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/usecase"
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
@@ -29,7 +27,6 @@ func NewHandler(lineClient *linebot.Client, botUsecase botUseCase.Usecase, entry
 
 func (h *Handler) Mount() {
 	http.HandleFunc("/callback", h.callback)
-	http.HandleFunc("/events", h.findAllEventLog)
 }
 
 func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
@@ -48,36 +45,26 @@ func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
 
 	for _, event := range events {
 		debug.PrintJSON(event)
-		if event.Type == linebot.EventTypeMessage {
-			var e domain.Event
-			jsonStr, _ := json.Marshal(event)
-			e.Build(jsonStr)
-			go h.entryUsecase.SaveLogEvent(&e)
 
+		profile, err := h.bot.GetProfile(event.Source.UserID).Do()
+		if err != nil {
+			profile = &linebot.UserProfileResponse{DisplayName: "Agung DP"}
+		}
+		debug.PrintJSON(profile)
+
+		switch event.Type {
+		case linebot.EventTypeJoin:
+			h.botUsecase.Reply(event, fmt.Sprintf("Hello %s :)", profile.DisplayName))
+
+		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				replyMessage := h.botUsecase.ProcessMessage(message.Text)
-				if _, err = h.bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil {
-					log.Print(err)
-				}
+				h.botUsecase.ProcessMessage(event, message)
 			}
 
-			profile := h.bot.GetProfile(event.Source.UserID)
-			debug.PrintJSON(profile)
 		}
 	}
 
 	response := shared.NewHTTPResponse(http.StatusOK, "ok")
-	response.JSON(w)
-}
-
-func (h *Handler) findAllEventLog(w http.ResponseWriter, req *http.Request) {
-	data, err := h.entryUsecase.FindAllEvent()
-	if err != nil {
-		response := shared.NewHTTPResponse(http.StatusInternalServerError, err.Error())
-		response.JSON(w)
-	}
-
-	response := shared.NewHTTPResponse(http.StatusOK, "success", data)
 	response.JSON(w)
 }

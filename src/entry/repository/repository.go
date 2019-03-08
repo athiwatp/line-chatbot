@@ -11,4 +11,5 @@ type Entry interface {
 type Event interface {
 	FindAll() ([]*domain.Event, error)
 	Save(data *domain.Event) error
+	RemoveAll() error
 }

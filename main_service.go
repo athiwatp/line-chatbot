@@ -4,8 +4,9 @@ import (
 	"log"
 
 	"github.com/agungdwiprasetyo/go-line-chatbot/config"
+	entryhandler "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/delivery"
 	entryUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/usecase"
-	linebotHandler "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/delivery"
+	linebothandler "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/delivery"
 	botUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/usecase"
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
 	"github.com/line/line-bot-sdk-go/linebot"
@@ -14,7 +15,8 @@ import (
 // Service main
 type Service struct {
 	conf           *config.Config
-	linebotHandler *linebotHandler.Handler
+	linebotHandler *linebothandler.Handler
+	entryHandler   *entryhandler.Handler
 }
 
 func initMainService(conf *config.Config) *Service {
@@ -25,13 +27,15 @@ func initMainService(conf *config.Config) *Service {
 		log.Fatal(err)
 	}
 
-	botUsecase := botUseCase.NewUsecase(repository)
+	botUsecase := botUseCase.NewUsecase(repository, bot)
 	entryUsecase := entryUseCase.NewUsecase(repository)
 
-	linebotHandler := linebotHandler.NewHandler(bot, botUsecase, entryUsecase)
+	linebotHandler := linebothandler.NewHandler(bot, botUsecase, entryUsecase)
+	entryHandler := entryhandler.NewHandler(entryUsecase)
 
 	return &Service{
 		conf:           conf,
 		linebotHandler: linebotHandler,
+		entryHandler:   entryHandler,
 	}
 }

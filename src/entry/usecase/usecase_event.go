@@ -18,3 +18,7 @@ func (uc *usecaseEvent) SaveLogEvent(data *domain.Event) error {
 func (uc *usecaseEvent) FindAllEvent() ([]*domain.Event, error) {
 	return uc.eventRepository.FindAll()
 }
+
+func (uc *usecaseEvent) ClearAllEventLog() error {
+	return uc.eventRepository.RemoveAll()
+}

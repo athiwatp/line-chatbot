@@ -40,3 +40,9 @@ func (r *repoEventMongo) FindAll() ([]*domain.Event, error) {
 
 	return events, nil
 }
+
+func (r *repoEventMongo) RemoveAll() error {
+	_, err := r.collection.RemoveAll(bson.M{})
+
+	return err
+}

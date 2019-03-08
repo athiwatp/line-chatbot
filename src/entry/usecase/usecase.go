@@ -10,6 +10,7 @@ import (
 type Usecase interface {
 	SaveLogEvent(data *domain.Event) error
 	FindAllEvent() ([]*domain.Event, error)
+	ClearAllEventLog() error
 }
 
 type usecaseImpl struct {
