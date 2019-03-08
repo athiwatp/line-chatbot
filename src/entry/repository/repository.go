@@ -1,6 +1,9 @@
 package repository
 
-import "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/domain"
+import (
+	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/domain"
+	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+)
 
 // Entry abstract interface
 type Entry interface {
@@ -9,7 +12,7 @@ type Entry interface {
 
 // Event interface
 type Event interface {
-	FindAll() ([]*domain.Event, error)
+	FindAll(filter *shared.Filter) ([]*domain.Event, error)
 	Save(data *domain.Event) error
 	RemoveAll() error
 }

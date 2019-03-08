@@ -15,8 +15,9 @@ func (uc *usecaseEvent) SaveLogEvent(data *domain.Event) error {
 	return uc.eventRepository.Save(data)
 }
 
-func (uc *usecaseEvent) FindAllEvent() ([]*domain.Event, error) {
-	return uc.eventRepository.FindAll()
+func (uc *usecaseEvent) FindAllEvent(filter *shared.Filter) ([]*domain.Event, error) {
+	filter.Offset = (filter.Page - 1) * filter.Limit
+	return uc.eventRepository.FindAll(filter)
 }
 
 func (uc *usecaseEvent) ClearAllEventLog() error {

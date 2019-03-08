@@ -21,8 +21,16 @@ type (
 		Success bool        `json:"success"`
 		Code    int         `json:"code"`
 		Message string      `json:"message"`
+		Meta    *Meta       `json:"meta,omitempty"`
 		Data    interface{} `json:"data,omitempty"`
 		Errors  interface{} `json:"errors,omitempty"`
+	}
+
+	// Meta model
+	Meta struct {
+		Page         int `json:"page"`
+		Limit        int `json:"limit"`
+		TotalRecords int `json:"totalRecords"`
 	}
 )
 
@@ -37,10 +45,11 @@ func NewHTTPResponse(code int, message string, params ...interface{}) HTTPRespon
 		}
 		param = refValue.Interface()
 
-		switch param.(type) {
+		switch data := param.(type) {
+		case Meta:
+			commonResponse.Meta = &data
 		case utils.MultiError:
-			multiError := param.(utils.MultiError)
-			commonResponse.Errors = multiError.ToMap()
+			commonResponse.Errors = data.ToMap()
 		default:
 			commonResponse.Data = param
 		}

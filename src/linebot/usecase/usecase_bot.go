@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/domain"
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/repository"
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
@@ -43,5 +45,5 @@ func (uc *usecaseImpl) ProcessMessage(event *linebot.Event, msg *linebot.TextMes
 		uc.eventRepository.Save(&e)
 	}()
 
-	return uc.Reply(event, msg.Text)
+	return uc.Reply(event, "(under construction)", fmt.Sprintf("Mantul gan => %s", msg.Text))
 }
