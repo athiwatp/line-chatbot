@@ -1,9 +1,9 @@
 package domain
 
 import (
+	"encoding/json"
 	"time"
 
-	"github.com/line/line-bot-sdk-go/linebot"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -26,14 +26,6 @@ type Event struct {
 }
 
 // Build event domain from line event bot data
-func (e *Event) Build(lineBotData *linebot.Event) {
-	e.ReplyToken = lineBotData.ReplyToken
-	e.Type = string(lineBotData.Type)
-	e.Timestamp = lineBotData.Timestamp
-
-	if lineBotData.Source != nil {
-		e.Source.GroupID = lineBotData.Source.GroupID
-		e.Source.Type = string(lineBotData.Source.Type)
-		e.Source.UserID = lineBotData.Source.UserID
-	}
+func (e *Event) Build(lineBotData []byte) {
+	json.Unmarshal(lineBotData, e)
 }

@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -49,7 +50,8 @@ func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
 		debug.PrintJSON(event)
 		if event.Type == linebot.EventTypeMessage {
 			var e domain.Event
-			e.Build(event)
+			jsonStr, _ := json.Marshal(event)
+			e.Build(jsonStr)
 			go h.entryUsecase.SaveLogEvent(&e)
 
 			switch message := event.Message.(type) {
@@ -59,6 +61,9 @@ func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
 					log.Print(err)
 				}
 			}
+
+			profile := h.bot.GetProfile(event.Source.UserID)
+			debug.PrintJSON(profile)
 		}
 	}
 
