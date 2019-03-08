@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/agungdwiprasetyo/go-line-chatbot/helper"
+	"github.com/agungdwiprasetyo/go-line-chatbot/middleware"
 	entryUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/usecase"
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
 	"github.com/agungdwiprasetyo/go-utils"
@@ -21,8 +22,8 @@ func NewHandler(entryUsecase entryUseCase.Usecase) *Handler {
 }
 
 func (h *Handler) Mount() {
-	http.HandleFunc("/entry/events", h.findAllEventLog)
-	http.HandleFunc("/entry/clearlog", h.clearAllLog)
+	http.Handle("/entry/events", middleware.BasicAuth(http.HandlerFunc(h.findAllEventLog)))
+	http.Handle("/entry/clearlog", middleware.BasicAuth(http.HandlerFunc(h.clearAllLog)))
 }
 
 func (h *Handler) findAllEventLog(w http.ResponseWriter, req *http.Request) {
