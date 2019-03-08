@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+	"github.com/agungdwiprasetyo/go-utils/debug"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -35,6 +36,7 @@ func (h *Handler) Callback(w http.ResponseWriter, req *http.Request) {
 	}
 
 	for _, event := range events {
+		debug.PrintJSON(event)
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
