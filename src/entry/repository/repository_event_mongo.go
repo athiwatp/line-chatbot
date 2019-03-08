@@ -29,6 +29,13 @@ func (r *repoEventMongo) Save(data *domain.Event) error {
 	return nil
 }
 
+func (r *repoEventMongo) Count(filter *shared.Filter) int {
+	q := bson.M{}
+	query := r.collection.Find(q)
+	count, _ := query.Count()
+	return count
+}
+
 func (r *repoEventMongo) FindAll(filter *shared.Filter) ([]*domain.Event, error) {
 	var events []*domain.Event
 	q := bson.M{}

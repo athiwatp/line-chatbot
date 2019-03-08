@@ -12,6 +12,7 @@ type Entry interface {
 
 // Event interface
 type Event interface {
+	Count(filter *shared.Filter) int
 	FindAll(filter *shared.Filter) ([]*domain.Event, error)
 	Save(data *domain.Event) error
 	RemoveAll() error

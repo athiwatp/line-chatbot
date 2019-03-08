@@ -55,15 +55,15 @@ func (h *Handler) findAllEventLog(w http.ResponseWriter, req *http.Request) {
 		filter.Limit = 10
 	}
 
-	data, err := h.entryUsecase.FindAllEvent(&filter)
-	if err != nil {
-		response := shared.NewHTTPResponse(http.StatusInternalServerError, err.Error())
+	result := h.entryUsecase.FindAllEvent(&filter)
+	if result.Error != nil {
+		response := shared.NewHTTPResponse(http.StatusInternalServerError, result.Error.Error())
 		response.JSON(w)
 		return
 	}
 
-	meta := shared.Meta{Page: filter.Page, Limit: filter.Limit}
-	response := shared.NewHTTPResponse(http.StatusOK, "success", data, meta)
+	meta := shared.Meta{Page: filter.Page, Limit: filter.Limit, TotalRecords: result.Total}
+	response := shared.NewHTTPResponse(http.StatusOK, "success", result.Data, meta)
 	response.JSON(w)
 }
 
@@ -72,6 +72,7 @@ func (h *Handler) clearAllLog(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		response := shared.NewHTTPResponse(http.StatusInternalServerError, err.Error())
 		response.JSON(w)
+		return
 	}
 
 	response := shared.NewHTTPResponse(http.StatusOK, "success")

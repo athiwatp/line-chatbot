@@ -9,7 +9,7 @@ import (
 // Usecase abstract interface
 type Usecase interface {
 	SaveLogEvent(data *domain.Event) error
-	FindAllEvent(filter *shared.Filter) ([]*domain.Event, error)
+	FindAllEvent(filter *shared.Filter) shared.Result
 	ClearAllEventLog() error
 }
 

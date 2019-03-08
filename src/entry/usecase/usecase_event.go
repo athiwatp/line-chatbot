@@ -15,9 +15,18 @@ func (uc *usecaseEvent) SaveLogEvent(data *domain.Event) error {
 	return uc.eventRepository.Save(data)
 }
 
-func (uc *usecaseEvent) FindAllEvent(filter *shared.Filter) ([]*domain.Event, error) {
+func (uc *usecaseEvent) FindAllEvent(filter *shared.Filter) (result shared.Result) {
 	filter.Offset = (filter.Page - 1) * filter.Limit
-	return uc.eventRepository.FindAll(filter)
+
+	data, err := uc.eventRepository.FindAll(filter)
+	if err != nil {
+		result.Error = err
+		return
+	}
+
+	result.Data = data
+	result.Total = uc.eventRepository.Count(filter)
+	return
 }
 
 func (uc *usecaseEvent) ClearAllEventLog() error {
