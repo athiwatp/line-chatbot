@@ -11,10 +11,14 @@ type Usecase interface {
 	SaveLogEvent(data *domain.Event) error
 	FindAllEvent(filter *shared.Filter) shared.Result
 	ClearAllEventLog() error
+	SaveProfile(data *domain.Profile) error
+	FindAllProfile(filter *shared.Filter) shared.Result
+	FindProfileByID(id string) shared.Result
 }
 
 type usecaseImpl struct {
 	*usecaseEvent
+	*usecaseProfile
 }
 
 // NewUsecase constructor
@@ -23,5 +27,8 @@ func NewUsecase(repo *shared.Repository) Usecase {
 	eventUsecase.repository = repo
 	eventUsecase.eventRepository = repository.NewRepositoryEventMongo(repo)
 
-	return &usecaseImpl{eventUsecase}
+	profileUsecase := new(usecaseProfile)
+	profileUsecase.profileRepo = repository.NewRepositoryProfileMongo(repo)
+
+	return &usecaseImpl{usecaseEvent: eventUsecase, usecaseProfile: profileUsecase}
 }

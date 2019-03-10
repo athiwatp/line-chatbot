@@ -49,6 +49,8 @@ func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
 	}
 
 	for _, event := range events {
+		go h.botUsecase.SaveLog(event)
+
 		debug.PrintJSON(event)
 
 		profile, err := h.bot.GetProfile(event.Source.UserID).Do()

@@ -3,7 +3,6 @@ package domain
 import (
 	"time"
 
-	"github.com/line/line-bot-sdk-go/linebot"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -13,33 +12,11 @@ type Event struct {
 	ReplyToken string        `bson:"reply_token" json:"replyToken"`
 	Type       string        `bson:"type" json:"type"`
 	Timestamp  time.Time     `bson:"timestamp" json:"timestamp"`
-	Source     struct {
-		GroupID string `bson:"group_id" json:"groupId"`
-		Type    string `bson:"type" json:"type"`
-		UserID  string `bson:"user_id" json:"userId"`
-	} `bson:"source" json:"source"`
-	Message struct {
+	SourceID   string        `bson:"source_id" json:"sourceId"`
+	SourceType string        `bson:"source_type" json:"sourceType"`
+	Message    struct {
 		ID   string `bson:"id" json:"id"`
 		Type string `bson:"type" json:"type"`
 		Text string `bson:"text" json:"text"`
 	} `bson:"message" json:"message"`
-}
-
-// Build event domain from line event bot data
-func (e *Event) Build(lineBotData *linebot.Event) {
-	e.ReplyToken = lineBotData.ReplyToken
-	e.Type = string(lineBotData.Type)
-	e.Timestamp = lineBotData.Timestamp
-
-	if lineBotData.Source != nil {
-		e.Source.GroupID = lineBotData.Source.GroupID
-		e.Source.Type = string(lineBotData.Source.Type)
-		e.Source.UserID = lineBotData.Source.UserID
-	}
-
-	message, ok := lineBotData.Message.(*linebot.TextMessage)
-	if ok {
-		e.Message.ID = message.ID
-		e.Message.Text = message.Text
-	}
 }

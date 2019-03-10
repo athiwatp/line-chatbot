@@ -22,7 +22,7 @@ func loadMongoConnection() *mgo.Database {
 
 	// Init database collection, set unique index
 	go func() {
-		coll := db.C("users")
+		coll := db.C("profiles")
 		index := mgo.Index{
 			Key:    []string{"id"},
 			Unique: true,

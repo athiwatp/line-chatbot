@@ -6,6 +6,6 @@ import "github.com/line/line-bot-sdk-go/linebot"
 type Usecase interface {
 	Reply(event *linebot.Event, messages ...string) error
 	ProcessMessage(event *linebot.Event, msg *linebot.TextMessage) error
-
+	SaveLog(event *linebot.Event) error
 	PushMessageToChannel(to, title, message string) error
 }

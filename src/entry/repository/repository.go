@@ -17,3 +17,11 @@ type Event interface {
 	Save(data *domain.Event) error
 	RemoveAll() error
 }
+
+// Profile interface
+type Profile interface {
+	Count(filter *shared.Filter) int
+	Save(*domain.Profile) error
+	FindAll(filter *shared.Filter) (res shared.Result)
+	FindByID(string) shared.Result
+}
