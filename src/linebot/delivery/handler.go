@@ -1,9 +1,12 @@
 package delivery
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
+	"github.com/agungdwiprasetyo/go-line-chatbot/middleware"
 	entryUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/usecase"
 	botUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/usecase"
 	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
@@ -25,8 +28,10 @@ func NewHandler(lineClient *linebot.Client, botUsecase botUseCase.Usecase, entry
 	}
 }
 
+// Mount router
 func (h *Handler) Mount() {
 	http.HandleFunc("/callback", h.callback)
+	http.Handle("/pushmessage", middleware.BasicAuth(http.HandlerFunc(h.pushMessage)))
 }
 
 func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
@@ -63,6 +68,35 @@ func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
 			}
 
 		}
+	}
+
+	response := shared.NewHTTPResponse(http.StatusOK, "ok")
+	response.JSON(w)
+}
+
+func (h *Handler) pushMessage(w http.ResponseWriter, req *http.Request) {
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		response := shared.NewHTTPResponse(http.StatusBadRequest, err.Error())
+		response.JSON(w)
+		return
+	}
+
+	var message struct {
+		To      string `json:"to"`
+		Title   string `json:"title"`
+		Message string `json:"message"`
+	}
+	if err = json.Unmarshal(body, &message); err != nil {
+		response := shared.NewHTTPResponse(http.StatusBadRequest, err.Error())
+		response.JSON(w)
+		return
+	}
+
+	if err := h.botUsecase.PushMessageToChannel(message.To, message.Title, message.Message); err != nil {
+		response := shared.NewHTTPResponse(http.StatusBadRequest, err.Error())
+		response.JSON(w)
+		return
 	}
 
 	response := shared.NewHTTPResponse(http.StatusOK, "ok")
