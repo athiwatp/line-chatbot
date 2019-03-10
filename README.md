@@ -1,4 +1,4 @@
-# Go Line Chatbot Webhook
+# Line Chatbot Webhook Written in Go Language
 
 ## How to use
 

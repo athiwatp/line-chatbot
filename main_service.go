@@ -3,12 +3,12 @@ package main
 import (
 	"log"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/config"
-	entryhandler "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/delivery"
-	entryUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/usecase"
-	linebothandler "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/delivery"
-	botUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/usecase"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+	"github.com/agungdwiprasetyo/line-chatbot/config"
+	entryhandler "github.com/agungdwiprasetyo/line-chatbot/src/entry/delivery"
+	entryUseCase "github.com/agungdwiprasetyo/line-chatbot/src/entry/usecase"
+	linebothandler "github.com/agungdwiprasetyo/line-chatbot/src/linebot/delivery"
+	botUseCase "github.com/agungdwiprasetyo/line-chatbot/src/linebot/usecase"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 

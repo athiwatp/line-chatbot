@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/domain"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+	"github.com/agungdwiprasetyo/line-chatbot/src/entry/domain"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

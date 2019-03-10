@@ -1,9 +1,9 @@
 package usecase
 
 import (
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/domain"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/repository"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+	"github.com/agungdwiprasetyo/line-chatbot/src/entry/domain"
+	"github.com/agungdwiprasetyo/line-chatbot/src/entry/repository"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 )
 
 type usecaseProfile struct {

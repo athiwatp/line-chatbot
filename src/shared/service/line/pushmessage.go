@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/domain"
+	"github.com/agungdwiprasetyo/line-chatbot/src/linebot/domain"
 	"github.com/agungdwiprasetyo/go-utils/debug"
 )
 

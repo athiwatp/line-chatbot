@@ -6,10 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/middleware"
-	entryUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/usecase"
-	botUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/usecase"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+	"github.com/agungdwiprasetyo/line-chatbot/middleware"
+	entryUseCase "github.com/agungdwiprasetyo/line-chatbot/src/entry/usecase"
+	botUseCase "github.com/agungdwiprasetyo/line-chatbot/src/linebot/usecase"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 	"github.com/agungdwiprasetyo/go-utils/debug"
 	"github.com/line/line-bot-sdk-go/linebot"
 )

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 )
 
 // BasicAuth middleware

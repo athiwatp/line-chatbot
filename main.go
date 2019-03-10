@@ -4,7 +4,7 @@ import (
 	"log"
 	"sync"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/config"
+	"github.com/agungdwiprasetyo/line-chatbot/config"
 	env "github.com/joho/godotenv"
 )
 

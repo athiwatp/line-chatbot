@@ -3,9 +3,9 @@ package delivery
 import (
 	"net/http"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/middleware"
-	entryUseCase "github.com/agungdwiprasetyo/go-line-chatbot/src/entry/usecase"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
+	"github.com/agungdwiprasetyo/line-chatbot/middleware"
+	entryUseCase "github.com/agungdwiprasetyo/line-chatbot/src/entry/usecase"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 )
 
 // Handler model

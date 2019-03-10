@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/helper"
+	"github.com/agungdwiprasetyo/line-chatbot/helper"
 	"github.com/agungdwiprasetyo/go-utils"
 )
 

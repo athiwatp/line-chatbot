@@ -3,11 +3,11 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/domain"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/entry/repository"
-	lineBotDomain "github.com/agungdwiprasetyo/go-line-chatbot/src/linebot/domain"
-	"github.com/agungdwiprasetyo/go-line-chatbot/src/shared"
-	lineService "github.com/agungdwiprasetyo/go-line-chatbot/src/shared/service/line"
+	"github.com/agungdwiprasetyo/line-chatbot/src/entry/domain"
+	"github.com/agungdwiprasetyo/line-chatbot/src/entry/repository"
+	lineBotDomain "github.com/agungdwiprasetyo/line-chatbot/src/linebot/domain"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
+	lineService "github.com/agungdwiprasetyo/line-chatbot/src/shared/service/line"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
