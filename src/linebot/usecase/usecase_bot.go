@@ -1,13 +1,12 @@
 package usecase
 
 import (
-	"fmt"
-
 	"github.com/agungdwiprasetyo/line-chatbot/src/entry/domain"
 	"github.com/agungdwiprasetyo/line-chatbot/src/entry/repository"
 	lineBotDomain "github.com/agungdwiprasetyo/line-chatbot/src/linebot/domain"
 	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 	lineService "github.com/agungdwiprasetyo/line-chatbot/src/shared/service/line"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared/service/textmining"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -43,8 +42,8 @@ func (uc *usecaseImpl) Reply(event *linebot.Event, messages ...string) error {
 }
 
 func (uc *usecaseImpl) ProcessMessage(event *linebot.Event, msg *linebot.TextMessage) error {
-	// TODO: add AI to process output from incoming message
-	return uc.Reply(event, "(under construction)", fmt.Sprintf("Mantul gan, masih brute force :) => %s", msg.Text))
+	botResponse := textmining.ProcessText(msg.Text)
+	return uc.Reply(event, botResponse)
 }
 
 func (uc *usecaseImpl) SaveLog(event *linebot.Event) error {
