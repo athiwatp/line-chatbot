@@ -65,8 +65,15 @@ func (uc *usecaseImpl) SaveLog(event *linebot.Event) error {
 		}
 
 		var source domain.Profile
-		source.ID = event.Source.UserID
 		source.Type = string(event.Source.Type)
+
+		switch source.Type {
+		case "user":
+			source.ID = event.Source.UserID
+		case "group":
+			source.ID = event.Source.GroupID
+		}
+
 		source.Name = profile.DisplayName
 		source.Avatar = profile.PictureURL
 		source.StatusMessage = profile.StatusMessage

@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
 
 const (
@@ -33,5 +34,8 @@ func ProcessText(text string) string {
 		Output string `json:"output"`
 	}
 	json.Unmarshal(body, &output)
-	return output.Output
+
+	return strings.TrimLeftFunc(output.Output, func(r rune) bool {
+		return r == '-' || r == ' '
+	})
 }
