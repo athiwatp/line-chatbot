@@ -65,6 +65,8 @@ func (uc *usecaseImpl) ProcessMessage(event *linebot.Event, msg *linebot.TextMes
 	} else {
 		botResponse = textmining.ProcessText(text)
 	}
+
+	botResponse = strings.TrimSpace(botResponse)
 	return uc.Reply(event, botResponse)
 }
 
