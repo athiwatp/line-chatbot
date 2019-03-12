@@ -1,12 +1,14 @@
 package usecase
 
 import (
+	"strings"
 	"github.com/agungdwiprasetyo/line-chatbot/src/entry/domain"
 	"github.com/agungdwiprasetyo/line-chatbot/src/entry/repository"
 	lineBotDomain "github.com/agungdwiprasetyo/line-chatbot/src/linebot/domain"
 	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
 	lineService "github.com/agungdwiprasetyo/line-chatbot/src/shared/service/line"
 	"github.com/agungdwiprasetyo/line-chatbot/src/shared/service/textmining"
+	"github.com/agungdwiprasetyo/line-chatbot/src/shared/service/translator"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -42,7 +44,27 @@ func (uc *usecaseImpl) Reply(event *linebot.Event, messages ...string) error {
 }
 
 func (uc *usecaseImpl) ProcessMessage(event *linebot.Event, msg *linebot.TextMessage) error {
-	botResponse := textmining.ProcessText(msg.Text)
+	var botResponse string
+	var text = msg.Text
+	translateToEnglish, translateToIndonesian := "terjemahkan ini ke inggris:", "terjemahkan ini ke indonesia:"
+
+	if strings.HasPrefix(strings.ToLower(text), translateToEnglish) {
+		i := strings.Index(strings.ToLower(text), translateToEnglish)
+		if i >= 0 {
+			text = text[i+len(translateToEnglish):]
+		}
+		botResponse = translator.Translate("id", "en", text)
+
+	} else if strings.HasPrefix(strings.ToLower(text), translateToIndonesian) {
+		i := strings.Index(strings.ToLower(text), translateToIndonesian)
+		if i >= 0 {
+			text = text[i+len(translateToIndonesian):]
+		}
+		botResponse = translator.Translate("en", "id", text)
+
+	} else {
+		botResponse = textmining.ProcessText(text)
+	}
 	return uc.Reply(event, botResponse)
 }
 

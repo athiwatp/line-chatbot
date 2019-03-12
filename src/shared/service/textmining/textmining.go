@@ -24,6 +24,7 @@ func ProcessText(text string) string {
 	if err != nil {
 		return defaultError
 	}
+	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

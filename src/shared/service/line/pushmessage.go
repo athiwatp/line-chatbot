@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/agungdwiprasetyo/line-chatbot/src/linebot/domain"
 	"github.com/agungdwiprasetyo/go-utils/debug"
+	"github.com/agungdwiprasetyo/line-chatbot/src/linebot/domain"
 )
 
 const url = "https://api.line.me/v2/bot/message/push"
@@ -30,6 +30,7 @@ func SendMessage(message *domain.Message) error {
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
