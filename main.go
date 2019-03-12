@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	if err := env.Load(); err != nil {
+	if err := env.Load(".env"); err != nil {
 		log.Fatal(err)
 	}
 
