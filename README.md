@@ -8,13 +8,19 @@ $ brew install golang
 ```
 
 2. Install dependencies
+
+* If go version <= 1.10
 ```sh
 $ glide install
 ```
-
-3. Build binary
+* If go version >= 1.11
 ```sh
-$ go build
+$ go mod vendor
+```
+
+3. Build to binary
+```sh
+$ make build
 ```
 
 4. Copy `env.sample` to `.env`, and fill environment variables
@@ -24,7 +30,7 @@ $ cp env.sample .env
 
 5. Run binary
 ```sh
-$ ./line-chatbot
+$ ./bin
 ```
 
 ## Click this link for add my line bot channel

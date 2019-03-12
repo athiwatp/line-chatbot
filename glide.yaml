@@ -1,4 +1,4 @@
-package: github.com/agungdwiprasetyo/go-line-chatbot
+package: github.com/agungdwiprasetyo/line-chatbot
 import:
 - package: gopkg.in/mgo.v2
 - package: github.com/joho/godotenv
