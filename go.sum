@@ -1,5 +1,5 @@
-github.com/agungdwiprasetyo/go-utils v0.0.0-20190214091735-02764ff3c420 h1:bS1Lqy0Gm85PhNW7ZZ6bilGg4zBdsG741GNPRA4BueA=
-github.com/agungdwiprasetyo/go-utils v0.0.0-20190214091735-02764ff3c420/go.mod h1:z34C05Knv49p/hLUcUHo93Pv3HZEEtwNOc7ke8Abfg0=
+github.com/agungdwiprasetyo/go-utils v0.0.0-20190313084706-9c7293a6a4f7 h1:pw95mdL8i7S2xVbar0+xWYFBz/hNKwUiSEGoVigCB2Q=
+github.com/agungdwiprasetyo/go-utils v0.0.0-20190313084706-9c7293a6a4f7/go.mod h1:z34C05Knv49p/hLUcUHo93Pv3HZEEtwNOc7ke8Abfg0=
 github.com/joho/godotenv v1.3.0 h1:Zjp+RcGpHhGlrMbJzXTrZZPrWj+1vfm90La1wgB6Bhc=
 github.com/joho/godotenv v1.3.0/go.mod h1:7hK45KPybAkOC6peb+G5yklZfMxEjkZhHbwpqxOKXbg=
 github.com/line/line-bot-sdk-go v5.0.0+incompatible h1:trErkZrZUBgHUOOG9VHN0TQP16cEIIVsxq1T6QCnsRs=

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/agungdwiprasetyo/line-chatbot/helper"
 	"github.com/agungdwiprasetyo/go-utils"
+	"github.com/agungdwiprasetyo/line-chatbot/helper"
 )
 
 // Filter model
@@ -32,7 +32,7 @@ func (f *Filter) BuildFromHTTPRequest(req *http.Request) *utils.MultiError {
 		multiError.Append("limit", fmt.Errorf("limit cannot less than zero"))
 	}
 
-	if !multiError.IsNil() {
+	if multiError.HasError() {
 		return multiError
 	}
 
