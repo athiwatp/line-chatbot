@@ -39,8 +39,7 @@ func (r *repoEventMongo) Count(filter *shared.Filter) int {
 func (r *repoEventMongo) FindAll(filter *shared.Filter) ([]*domain.Event, error) {
 	var events []*domain.Event
 	q := bson.M{}
-	query := r.collection.Find(q)
-	// count, _ := query.Count()
+	query := r.collection.Find(q).Sort("-timestamp")
 	if err := query.Skip(filter.Offset).Limit(filter.Limit).All(&events); err != nil {
 		return nil, err
 	}
