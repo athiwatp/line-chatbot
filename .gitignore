@@ -1,6 +1,6 @@
 vendor/
 glide.lock
-.env
+.env*
 go-line-chatbot
 line-chatbot
 gin-bin

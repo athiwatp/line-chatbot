@@ -8,3 +8,5 @@ import:
   subpackages:
   - linebot
 - package: github.com/agungdwiprasetyo/go-utils
+- package: github.com/gorilla/mux
+  version: ~1.7.0

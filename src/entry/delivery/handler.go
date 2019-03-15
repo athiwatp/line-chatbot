@@ -3,9 +3,9 @@ package delivery
 import (
 	"net/http"
 
-	"github.com/agungdwiprasetyo/line-chatbot/middleware"
 	entryUseCase "github.com/agungdwiprasetyo/line-chatbot/src/entry/usecase"
 	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
+	"github.com/gorilla/mux"
 )
 
 // Handler model
@@ -20,11 +20,11 @@ func NewHandler(entryUsecase entryUseCase.Usecase) *Handler {
 	}
 }
 
-// Mount router to entry handler
-func (h *Handler) Mount(root string) {
-	http.Handle("/"+root+"/events", middleware.BasicAuth(http.HandlerFunc(h.findAllEventLog)))
-	http.Handle("/"+root+"/clearlog", middleware.BasicAuth(http.HandlerFunc(h.clearAllLog)))
-	http.Handle("/"+root+"/users", middleware.BasicAuth(http.HandlerFunc(h.findAllUser)))
+// Mount router to entry handler (prefix => "/entry") with basic authorization
+func (h *Handler) Mount(entry *mux.Router) {
+	entry.HandleFunc("/events", h.findAllEventLog)
+	entry.HandleFunc("/clearlog", h.clearAllLog)
+	entry.HandleFunc("/users", h.findAllUser)
 }
 
 func (h *Handler) findAllEventLog(w http.ResponseWriter, req *http.Request) {

@@ -6,20 +6,23 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/agungdwiprasetyo/go-utils/debug"
 	"github.com/agungdwiprasetyo/line-chatbot/middleware"
 	entryUseCase "github.com/agungdwiprasetyo/line-chatbot/src/entry/usecase"
 	botUseCase "github.com/agungdwiprasetyo/line-chatbot/src/linebot/usecase"
 	"github.com/agungdwiprasetyo/line-chatbot/src/shared"
-	"github.com/agungdwiprasetyo/go-utils/debug"
+	"github.com/gorilla/mux"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
+// Handler line bot model
 type Handler struct {
 	bot          *linebot.Client
 	botUsecase   botUseCase.Usecase
 	entryUsecase entryUseCase.Usecase
 }
 
+// NewHandler constructor
 func NewHandler(lineClient *linebot.Client, botUsecase botUseCase.Usecase, entryUsecase entryUseCase.Usecase) *Handler {
 	return &Handler{
 		bot:          lineClient,
@@ -29,9 +32,12 @@ func NewHandler(lineClient *linebot.Client, botUsecase botUseCase.Usecase, entry
 }
 
 // Mount router
-func (h *Handler) Mount() {
-	http.HandleFunc("/callback", h.callback)
-	http.Handle("/pushmessage", middleware.BasicAuth(http.HandlerFunc(h.pushMessage)))
+func (h *Handler) Mount(router *mux.Router, auth *middleware.Authorization) {
+	router.HandleFunc("/callback", h.callback)
+
+	utils := router.PathPrefix("/utils").Subrouter()
+	utils.Use(auth.APIKey)
+	utils.HandleFunc("/pushmessage", h.pushMessage)
 }
 
 func (h *Handler) callback(w http.ResponseWriter, req *http.Request) {
